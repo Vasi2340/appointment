@@ -1,15 +1,19 @@
 from django.contrib import admin
-from .models import User
-from .models import ClientProfile
+from django.contrib.auth.admin import UserAdmin
+from .models import User, ClientProfile
 
-# Register your models here.
 
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email', 'role', 'is_staff')
-    list_filter = ('role', 'is_staff')
-    search_fields = ('username', 'email')
+class CustomUserAdmin(UserAdmin):
+    fieldsets = UserAdmin.fieldsets + (
+        ('Role Information', {'fields': ('role',)}),
+    )
+
+    add_fieldsets = UserAdmin.add_fieldsets + (
+        ('Role Information', {'fields': ('role',)}),
+    )
+
 
 @admin.register(ClientProfile)
-class CliemtProfileAdmin(admin.ModelAdmin):
+class ClientProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'psychologist')
