@@ -3,13 +3,31 @@
 {% block content %}
 <h2>Psychologist Dashboard</h2>
 
+<h3>Next Appointment</h3>
+
+{% if next_appointment %}
+<p>
+    {{ next_appointment.client.username }} at
+    {{ next_appointment.start_time }}
+</p>
+{% else %}
+<p>No upcoming appointments</p>
+{% endif %}
+
 <h3>Your Appointments</h3>
 
 <ul>
 {% for appointment in appointments %}
     <li>
         {{ appointment.client.username }} -
-        {{ appointment.start_time }}
+        {{ appointment.start_time }} 
+        <br>Price: €{{ appointment.price }}<br>
+
+        {% if appointment.paid %}
+            ✅ Paid
+        {% else %}
+            ❗ Unpaid
+        {% endif %}
     </li>
 {% empty %}
     <li>No appointments yet</li>
