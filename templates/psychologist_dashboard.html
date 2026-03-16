@@ -2,5 +2,18 @@
 
 {% block content %}
 <h2>Psychologist Dashboard</h2>
-<p>Welcome Dr. {{ user.username }}</p>
+
+<h3>Your Appointments</h3>
+
+<ul>
+{% for appointment in appointments %}
+    <li>
+        {{ appointment.client.username }} -
+        {{ appointment.start_time }}
+    </li>
+{% empty %}
+    <li>No appointments yet</li>
+{% endfor %}
+</ul>
+
 {% endblock %}

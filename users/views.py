@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from appointments.models import Appointment
 
 # Create your views here.
 
@@ -14,8 +15,14 @@ def home(request):
 
 @login_required
 def psychologist_dashboard(request):
-    return render(request, 'psychologist_dashboard.html')
+    appointments = Appointment.objects.filter(psychologist=request.user)
+    return render(request, 'psychologist_dashboard.html', {
+        'appointments': appointments
+    })
 
 @login_required
 def client_dashboard(request):
-    return render(request, 'client_dashboard.html')
+    appointments = Appointment.objects.filter(client=request.user)
+    return render(request, 'client_dashboard.html', {
+        'appointments': appointments
+    })
