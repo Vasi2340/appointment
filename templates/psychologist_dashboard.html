@@ -3,6 +3,20 @@
 {% block content %}
 <h2>Psychologist Dashboard</h2>
 
+<h3>Your Clients</h3>
+
+<ul>
+{% for client in clients %}
+    <li>
+        <a href="{% url 'client_detail' client.user.id %}">
+            {{ client.user.username }}
+        </a>
+    </li>
+{% empty %}
+    <li>No clients assigned</li>
+{% endfor %}
+</ul>
+
 <h3>Next Appointment</h3>
 
 {% if next_appointment %}

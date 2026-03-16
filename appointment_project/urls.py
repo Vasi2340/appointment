@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from users.views import home, psychologist_dashboard, client_dashboard
+from users.views import client_detail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,5 +27,6 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
 
     path('psychologist/', psychologist_dashboard, name='psychologist_dashboard'),
-    path('client/', client_dashboard, name='client_dashboard')
+    path('client/', client_dashboard, name='client_dashboard'),
+    path('client/<int:client_id>/', client_detail, name='client_detail'),
 ]

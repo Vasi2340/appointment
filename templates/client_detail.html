@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Client: {{ client.username }}</h2>
+
+<h3>Total Outstanding Balance</h3>
+<p>{{ total_due }}</p>
+
+<h3>Appointments</h3>
+
+<ul>
+{% for appointment in appointments %}
+    <li>
+        {{ appointment.start_time }} -
+        Price: {{ appointment.price }}
+
+        {% if appointment.paid %}
+            ✅ Paid
+        {% else %}
+            ❗ Unpaid
+        {% endif %}
+    </li>
+{% empty %}
+    <li>No appointments</li>
+{% endfor %}
+</ul>
+
+{% endblock %}
