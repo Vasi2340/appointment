@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from appointments.models import Appointment
 from django.utils import timezone
-from users.models import ClientProfile
+from users.models import ClientProfile, User
 from django.shortcuts import get_object_or_404
 
 # Create your views here.
