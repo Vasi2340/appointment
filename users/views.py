@@ -4,6 +4,7 @@ from appointments.models import Appointment, Note
 from django.utils import timezone
 from users.models import ClientProfile, User
 from django.shortcuts import get_object_or_404
+from appointments.forms import NoteForm
 
 # Create your views here.
 
@@ -46,10 +47,16 @@ def client_dashboard(request):
     unpaid_appointments = appointments.filter(paid=False)
     total_due = sum(a.price for a in unpaid_appointments)
 
+    notes = Note.objects.filter(
+        client=request.user,
+        visible_to_client=True
+    ).order_by('-created_at')
+
     return render(request, 'client_dashboard.html', {
         'appointments': appointments,
         'next_appointment': next_appointment,
-        'total_due': total_due
+        'total_due': total_due,
+        'notes':notes
     })
 
 @login_required
@@ -58,7 +65,7 @@ def client_detail(request, client_id):
     client = get_object_or_404(User, id=client_id, role='client')
 
     appointments = Appointment.objects.filter(
-        client = client
+        client=client
     ).order_by('start_time')
 
     unpaid_appointments = appointments.filter(paid=False)
@@ -66,9 +73,21 @@ def client_detail(request, client_id):
 
     notes = Note.objects.filter(client=client).order_by('-created_at')
 
-    return render(request, 'client_detail.html', {
-        'client': client,
-        'appointments': appointments,
-        'total_due': total_due,
-        'notes':notes
+    if request.method == "POST":
+        form = NoteForm(request.POST)
+        if form.is_valid():
+            note = form.save(commit=False)
+            note.client = client
+            note.author = request.user
+            note.save()
+            return redirect("client_detail", client_id=client.id)
+    else:
+        form = NoteForm()
+
+    return render(request, "client_detail.html", {
+        "client": client,
+        "appointments": appointments,
+        "total_due": total_due,
+        "notes": notes,
+        "form": form
     })

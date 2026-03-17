@@ -38,4 +38,17 @@
 {% endfor %}
 </ul>
 
+<h3>Notes from your therapist</h3>
+
+<ul>
+{% for note in notes %}
+    <li>
+        <strong>{{ note.created_at }}</strong><br>
+        {{ note.text }}
+    </li>
+{% empty %}
+    <li>No notes available</li>
+{% endfor %}
+</ul>
+
 {% endblock %}
