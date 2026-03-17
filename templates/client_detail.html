@@ -20,6 +20,11 @@
         {% else %}
             ❗ Unpaid
         {% endif %}
+
+        <a href="{% url 'toggle_payment' appointment.id %}">
+            Toggle Payment
+        </a>
+
     </li>
 {% empty %}
     <li>No appointments</li>
