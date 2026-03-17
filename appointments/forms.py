@@ -5,3 +5,8 @@ class NoteForm(forms.ModelForm):
     class Meta:
         model = Note
         fields = ["text", "visible_to_client"]
+
+class ClientNoteForm(forms.ModelForm):
+    class Meta:
+        model = Note
+        fields = ["text"]

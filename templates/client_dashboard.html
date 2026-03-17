@@ -38,6 +38,14 @@
 {% endfor %}
 </ul>
 
+<h3>Write a Journal Entry</h3>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Entry</button>
+</form>
+
 <h3>Notes from your therapist</h3>
 
 <ul>
