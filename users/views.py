@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from appointments.models import Appointment
+from appointments.models import Appointment, Note
 from django.utils import timezone
 from users.models import ClientProfile, User
 from django.shortcuts import get_object_or_404
@@ -64,8 +64,11 @@ def client_detail(request, client_id):
     unpaid_appointments = appointments.filter(paid=False)
     total_due = sum(a.price for a in unpaid_appointments)
 
+    notes = Note.objects.filter(client=client).order_by('-created_at')
+
     return render(request, 'client_detail.html', {
         'client': client,
         'appointments': appointments,
-        'total_due': total_due
+        'total_due': total_due,
+        'notes':notes
     })
