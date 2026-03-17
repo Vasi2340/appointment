@@ -18,25 +18,30 @@
 
 <p>You currently owe: €{{ total_due }}</p>
 
-<h3>Your Appointments</h3>
+<h3>Your appointments</h3>
 
-<ul>
+<table class="table table-striped">
+<tr>
+    <th>Date</th>
+    <th>Price</th>
+    <th>Status</th>
+</tr>
+
 {% for appointment in appointments %}
-    <li>
-        {{ appointment.start_time }} with
-        {{ appointment.psychologist.username }} 
-        <br>Price: €{{ appointment.price }}<br>
+<tr>
+    <td>{{ appointment.start_time }}</td>
+    <td>{{ appointment.price }}</td>
 
+    <td>
         {% if appointment.paid %}
-            ✅ Paid
+            <span class="badge bg-success">Paid</span>
         {% else %}
-            ❗ Unpaid
+            <span class="badge bg-danger">Unpaid</span>
         {% endif %}
-    </li>
-{% empty %}
-    <li>No appointments scheduled</li>
+    </td>
+</tr>
 {% endfor %}
-</ul>
+</table>
 
 <h3>Write a Journal Entry</h3>
 
@@ -46,17 +51,30 @@
     <button type="submit">Save Entry</button>
 </form>
 
-<h3>Notes from your therapist</h3>
 
-<ul>
+
+<h3>Notes</h3>
 {% for note in notes %}
-    <li>
-        <strong>{{ note.created_at }}</strong><br>
-        {{ note.text }}
-    </li>
+
+<div class="card mb-3">
+    <div class="card-body">
+
+        <small class="text-muted">
+            {{ note.author.username }} – {{ note.created_at }}
+        </small>
+
+        <p class="mt-2">
+            {{ note.text }}
+        </p>
+
+
+    </div>
+</div>
+
 {% empty %}
-    <li>No notes available</li>
+
+<p>No notes yet</p>
+
 {% endfor %}
-</ul>
 
 {% endblock %}

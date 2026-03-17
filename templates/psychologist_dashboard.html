@@ -30,22 +30,27 @@
 
 <h3>Your Appointments</h3>
 
-<ul>
-{% for appointment in appointments %}
-    <li>
-        {{ appointment.client.username }} -
-        {{ appointment.start_time }} 
-        <br>Price: €{{ appointment.price }}<br>
+<table class="table table-striped">
+<tr>
+    <th>Date</th>
+    <th>Price</th>
+    <th>Status</th>
+</tr>
 
+{% for appointment in appointments %}
+<tr>
+    <td>{{ appointment.start_time }}</td>
+    <td>{{ appointment.price }}</td>
+
+    <td>
         {% if appointment.paid %}
-            ✅ Paid
+            <span class="badge bg-success">Paid</span>
         {% else %}
-            ❗ Unpaid
+            <span class="badge bg-danger">Unpaid</span>
         {% endif %}
-    </li>
-{% empty %}
-    <li>No appointments yet</li>
+    </td>
+</tr>
 {% endfor %}
-</ul>
+</table>
 
 {% endblock %}

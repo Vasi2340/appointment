@@ -9,54 +9,82 @@
 
 <h3>Appointments</h3>
 
-<ul>
+<table class="table table-striped">
+<tr>
+    <th>Date</th>
+    <th>Price</th>
+    <th>Status</th>
+    <th></th>
+</tr>
+
 {% for appointment in appointments %}
-    <li>
-        {{ appointment.start_time }} -
-        Price: {{ appointment.price }}
+<tr>
+    <td>{{ appointment.start_time }}</td>
+    <td>{{ appointment.price }}</td>
 
+    <td>
         {% if appointment.paid %}
-            ✅ Paid
+            <span class="badge bg-success">Paid</span>
         {% else %}
-            ❗ Unpaid
+            <span class="badge bg-danger">Unpaid</span>
         {% endif %}
+    </td>
 
-        <a href="{% url 'toggle_payment' appointment.id %}">
-            Toggle Payment
+    <td>
+        <a class="btn btn-sm btn-primary"
+           href="{% url 'toggle_payment' appointment.id %}">
+            Toggle
         </a>
-
-    </li>
-{% empty %}
-    <li>No appointments</li>
+    </td>
+</tr>
 {% endfor %}
-</ul>
+
+</table>
 
 <h3>Add Note</h3>
 
-<form method="post">
+<form method="post" class="mb-4">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save Note</button>
+
+    <div class="mb-3">
+        {{ form.text.label_tag }}
+        {{ form.text }}
+    </div>
+
+    <div class="form-check mb-3">
+        {{ form.visible_to_client }}
+        {{ form.visible_to_client.label_tag }}
+    </div>
+
+    <button class="btn btn-success">Save Note</button>
 </form>
 
 <h3>Notes</h3>
 
-<ul>
 {% for note in notes %}
-    <li>
-        <strong>{{ note.author.username }}</strong>
-        ({{ note.created_at }})<br>
+
+<div class="card mb-3">
+    <div class="card-body">
+
+        <small class="text-muted">
+            {{ note.author.username }} – {{ note.created_at }}
+        </small>
+
+        <p class="mt-2">
+            {{ note.text }}
+        </p>
 
         {% if not note.visible_to_client %}
-            🔒 Private:<br>
+            <span class="badge bg-secondary">Private</span>
         {% endif %}
 
-        {{ note.text }}
+    </div>
+</div>
 
-    </li>
 {% empty %}
-    <li>No notes yet</li>
+
+<p>No notes yet</p>
+
 {% endfor %}
-</ul>
 
 {% endblock %}
