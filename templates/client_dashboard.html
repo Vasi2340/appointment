@@ -25,6 +25,7 @@
     <th>Date</th>
     <th>Price</th>
     <th>Status</th>
+    <th>Cancel</th>
 </tr>
 
 {% for appointment in appointments %}
@@ -38,6 +39,11 @@
         {% else %}
             <span class="badge bg-danger">Unpaid</span>
         {% endif %}
+    </td>
+    <td>
+        <a href="{% url 'cancel_appointment' appointment.id %}">
+            Cancel
+        </a>
     </td>
 </tr>
 {% endfor %}

@@ -15,12 +15,14 @@
     <th>Price</th>
     <th>Status</th>
     <th></th>
+    <th></th>
 </tr>
 
 {% for appointment in appointments %}
 <tr>
     <td>{{ appointment.start_time }}</td>
     <td>{{ appointment.price }}</td>
+    
 
     <td>
         {% if appointment.paid %}

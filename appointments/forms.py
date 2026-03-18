@@ -1,5 +1,5 @@
 from django import forms
-from .models import Note
+from .models import Note, Appointment
 
 class NoteForm(forms.ModelForm):
     class Meta:
@@ -10,3 +10,8 @@ class ClientNoteForm(forms.ModelForm):
     class Meta:
         model = Note
         fields = ["text", "attachment"]
+
+class AppointmentForm(forms.ModelForm):
+    class Meta:
+        model = Appointment
+        fields = ["client", "start_time", "price"]
