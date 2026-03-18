@@ -43,19 +43,9 @@
 
 <h3>Add Note</h3>
 
-<form method="post" class="mb-4">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-
-    <div class="mb-3">
-        {{ form.text.label_tag }}
-        {{ form.text }}
-    </div>
-
-    <div class="form-check mb-3">
-        {{ form.visible_to_client }}
-        {{ form.visible_to_client.label_tag }}
-    </div>
-
+    {{ form.as_p }}
     <button class="btn btn-success">Save Note</button>
 </form>
 
@@ -73,6 +63,12 @@
         <p class="mt-2">
             {{ note.text }}
         </p>
+
+        {% if note.attachment %}
+            <a href="{{ note.attachment.url }}"  target="_blank" rel="noopener noreferrer">
+                Attachment
+            </a>
+        {% endif %}
 
         {% if not note.visible_to_client %}
             <span class="badge bg-secondary">Private</span>

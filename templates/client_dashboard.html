@@ -45,10 +45,10 @@
 
 <h3>Write a Journal Entry</h3>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Save Entry</button>
+    <button class="btn btn-success">Save Note</button>
 </form>
 
 
@@ -67,6 +67,11 @@
             {{ note.text }}
         </p>
 
+        {% if note.attachment %}
+            <a href="{{ note.attachment.url }}"  target="_blank" rel="noopener noreferrer">
+                Attachment
+            </a>
+        {% endif %}
 
     </div>
 </div>

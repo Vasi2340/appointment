@@ -39,6 +39,12 @@ class Note(models.Model):
 
     text = models.TextField()
 
+    attachment = models.FileField(
+        upload_to='note_attachments/',
+        blank=True,
+        null=True
+    )
+
     visible_to_client = models.BooleanField(default=True)
 
     created_at = models.DateTimeField(auto_now_add=True)

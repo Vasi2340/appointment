@@ -10,4 +10,9 @@ class AppointmentAdmin(admin.ModelAdmin):
 
 @admin.register(Note)
 class NoteAdmin(admin.ModelAdmin):
-    list_display = ("client", "author", "visible_to_client", "created_at")
+    list_display = ("client", "author", "visible_to_client", "has_attachment", "created_at")
+
+    def has_attachment(self, obj):
+        if obj.attachment:
+            return "Yes"
+        return ""

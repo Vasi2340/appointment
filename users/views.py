@@ -53,7 +53,7 @@ def client_dashboard(request):
     ).order_by('-created_at')
 
     if request.method == "POST":
-        form = ClientNoteForm(request.POST)
+        form = ClientNoteForm(request.POST, request.FILES)
         if form.is_valid():
             note = form.save(commit=False)
             note.client = request.user
@@ -87,7 +87,7 @@ def client_detail(request, client_id):
     notes = Note.objects.filter(client=client).order_by('-created_at')
 
     if request.method == "POST":
-        form = NoteForm(request.POST)
+        form = NoteForm(request.POST, request.FILES)
         if form.is_valid():
             note = form.save(commit=False)
             note.client = client

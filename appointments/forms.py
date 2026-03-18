@@ -4,9 +4,9 @@ from .models import Note
 class NoteForm(forms.ModelForm):
     class Meta:
         model = Note
-        fields = ["text", "visible_to_client"]
+        fields = ["text", "attachment", "visible_to_client"]
 
 class ClientNoteForm(forms.ModelForm):
     class Meta:
         model = Note
-        fields = ["text"]
+        fields = ["text", "attachment"]
