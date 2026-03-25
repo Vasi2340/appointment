@@ -36,6 +36,7 @@
 
 <table class="table table-striped">
 <tr>
+    <th>Client</th>
     <th>Date</th>
     <th>Price</th>
     <th>Status</th>
@@ -44,6 +45,7 @@
 
 {% for appointment in appointments %}
 <tr>
+    <td>{{ appointment.client }}</td>
     <td>{{ appointment.start_time }}</td>
     <td>{{ appointment.price }}</td>
 

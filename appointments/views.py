@@ -19,14 +19,14 @@ def toggle_payment(request, appointment_id):
 def create_appointment(request):
 
     if request.method == "POST":
-        form = AppointmentForm(request.POST)
+        form = AppointmentForm(request.POST, psychologist=request.user)
         if form.is_valid():
             appointment = form.save(commit=False)
             appointment.psychologist = request.user
             appointment.save()
             return redirect("psychologist_dashboard")
     else:
-        form = AppointmentForm()
+        form = AppointmentForm(psychologist=request.user)
 
     return render(request, "create_appointment.html", {"form": form})
 

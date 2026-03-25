@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from datetime import timedelta
 
 # Create your models here.
 
@@ -17,9 +18,13 @@ class Appointment(models.Model):
         limit_choices_to={'role':'client'}
     )
     start_time = models.DateTimeField()
+    duration = models.IntegerField(default=60)  # minutes
     end_time = models.DateTimeField()
     price = models.DecimalField(max_digits=8, decimal_places=2)
     paid = models.BooleanField(default=False)
+
+    def end_time(self):
+        return self.start_time + timedelta(minutes=self.duration)
 
     def __str__(self):
         return f"{self.client.username} - {self.start_time}"
