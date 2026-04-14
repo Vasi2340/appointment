@@ -3,6 +3,8 @@ from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Appointment
 from .forms import AppointmentForm
+from datetime import datetime, timedelta
+from django.utils import timezone
 
 
 @login_required
@@ -40,3 +42,30 @@ def cancel_appointment(request, appointment_id):
         appointment.delete()
 
     return redirect("client_dashboard")
+
+@login_required
+def weekly_calendar(request):
+
+    today = timezone.now().date()
+
+    # start of week (Monday)
+    start_of_week = today - timedelta(days=today.weekday())
+
+    days = []
+
+    for i in range(7):
+        day = start_of_week + timedelta(days=i)
+
+        appointments = Appointment.objects.filter(
+            psychologist=request.user,
+            start_time__date=day
+        ).order_by('start_time')
+
+        days.append({
+            "date": day,
+            "appointments": appointments
+        })
+
+    return render(request, "weekly_calendar.html", {
+        "days": days
+    })

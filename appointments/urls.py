@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import toggle_payment
 from .views import create_appointment, cancel_appointment
+from .views import weekly_calendar
 
 urlpatterns = [
     path(
@@ -10,4 +11,5 @@ urlpatterns = [
     ),
     path("create/", create_appointment, name="create_appointment"),
     path("cancel/<int:appointment_id>/", cancel_appointment, name="cancel_appointment"),
+    path("calendar/", weekly_calendar, name="weekly_calendar"),
 ]

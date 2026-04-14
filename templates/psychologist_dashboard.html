@@ -3,6 +3,10 @@
 {% block content %}
 <h2>Psychologist Dashboard</h2>
 
+<a class="btn btn-primary mb-3" href="{% url 'weekly_calendar' %}">
+    View Calendar
+</a>
+
 <h3>Your Clients</h3>
 
 <a class="btn btn-success mb-3" href="{% url 'create_appointment' %}">

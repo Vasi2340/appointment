@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Weekly Calendar</h2>
+
+<div class="row">
+
+{% for day in days %}
+    <div class="col-md-3 mb-4">
+        <div class="card">
+            <div class="card-header">
+                {{ day.date }}
+            </div>
+
+            <div class="card-body">
+
+                {% for appt in day.appointments %}
+                    <div class="mb-2">
+                        <strong>{{ appt.start_time|time:"H:i" }}</strong><br>
+                        {{ appt.client.username }}
+                    </div>
+                {% empty %}
+                    <p class="text-muted">No appointments</p>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+</div>
+
+{% endblock %}
