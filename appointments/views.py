@@ -5,6 +5,7 @@ from .models import Appointment
 from .forms import AppointmentForm
 from datetime import datetime, timedelta
 from django.utils import timezone
+from django.contrib import messages
 
 
 @login_required
@@ -14,7 +15,7 @@ def toggle_payment(request, appointment_id):
 
     appointment.paid = not appointment.paid
     appointment.save()
-
+    messages.info(request, "Payment status updated.")
     return redirect("client_detail", client_id=appointment.client.id)
 
 @login_required
@@ -26,6 +27,7 @@ def create_appointment(request):
             appointment = form.save(commit=False)
             appointment.psychologist = request.user
             appointment.save()
+            messages.success(request, "Appointment created successfully.")
             return redirect("psychologist_dashboard")
     else:
         form = AppointmentForm(psychologist=request.user)
@@ -40,8 +42,11 @@ def cancel_appointment(request, appointment_id):
     # allow only related users
     if request.user == appointment.client or request.user == appointment.psychologist:
         appointment.delete()
-
-    return redirect("client_dashboard")
+    messages.warning(request, "Appointment cancelled.")
+    if request.user.role == "psychologist":
+        return redirect("psychologist_dashboard")
+    else:
+        return redirect("client_dashboard")
 
 @login_required
 def weekly_calendar(request):

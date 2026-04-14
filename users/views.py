@@ -5,6 +5,7 @@ from django.utils import timezone
 from users.models import ClientProfile, User
 from django.shortcuts import get_object_or_404
 from appointments.forms import NoteForm, ClientNoteForm
+from django.contrib import messages
 
 # Create your views here.
 
@@ -60,6 +61,7 @@ def client_dashboard(request):
             note.author = request.user
             note.visible_to_client = True
             note.save()
+            messages.success(request, "Note saved.")
             return redirect("client_dashboard")
     else:
         form = ClientNoteForm()
